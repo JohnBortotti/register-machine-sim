@@ -1,0 +1,3 @@
+(executable
+ (public_name register_machine_sim)
+ (name main))

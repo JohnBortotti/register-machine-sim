@@ -1,14 +1,26 @@
 open Register_machine_sim
 
+(* [] create stack operations *)
+(* [] add operands evaluation *)
 let first_machine = create_machine
     0
-    [{ label="a"; value=3 }; { label="x"; value=2 }]
+    [|{value=0 }; {value=0}|]
     {s=[]}
-    [|"456"; "123"|]
+    [|"rprt 0"; "radd 0 1"; "rprt 0"|]
 
 let instructions_dictionary = [
-        {opcode="123"; registers_operand=[||]; func=(function machine -> machine.pc <- machine.pc+1; machine )};
-        {opcode="456"; registers_operand=[||]; func=(function machine -> machine.pc <- machine.pc+1; machine )}
+        {opcode="rprt"; func=(
+            function machine -> 
+                machine.pc <- machine.pc+1; 
+                Printf.printf "%d \n" machine.registers.(0).value;
+                machine 
+        )};
+        {opcode="radd"; func=(
+            function machine -> 
+                machine.pc <- machine.pc+1; 
+                machine.registers.(0).value <- machine.registers.(0).value + 1;
+                machine 
+        )}
     ]
     
 let () =
